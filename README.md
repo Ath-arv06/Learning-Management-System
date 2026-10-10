@@ -1,4 +1,4 @@
-# 🎓 Apex College — Learning Management System (LMS)
+# 🎓 OptOut — Learning Management System (LMS)
 
 A complete, modern full-stack **Learning Management System (LMS)** designed for universities and colleges. Built with a robust **Java Spring Boot** backend and a fast, responsive **Vite** live frontend with dark-mode aesthetics.
 
@@ -76,9 +76,9 @@ npm run dev
 
 | Role | Email | Password |
 | :--- | :--- | :--- |
-| **Admin** | `admin@apexcollege.edu` | `Admin@123456` |
-| **Instructor** | `prof.elena@apexcollege.edu` | *(Demo profile)* |
-| **Student** | `student@apexcollege.edu` | *(Demo profile)* |
+| **Admin** | `admin@optout.edu` | `Admin@123456` |
+| **Instructor** | `prof.elena@optout.edu` | *(Demo profile)* |
+| **Student** | `student@optout.edu` | *(Demo profile)* |
 
 ---
 

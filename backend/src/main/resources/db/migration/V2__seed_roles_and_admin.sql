@@ -15,12 +15,12 @@ INSERT INTO roles (name) VALUES ('INSTRUCTOR');
 INSERT INTO roles (name) VALUES ('ADMIN');
 
 -- Seed the initial administrator account
--- Email: admin@apexcollege.edu
+-- Email: admin@optout.edu
 -- Password: Admin@123456  (BCrypt, cost 12)
 -- CHANGE THIS IMMEDIATELY IN ANY NON-DEV ENVIRONMENT
 INSERT INTO users (email, password_hash, first_name, last_name, status, email_verified_at)
 VALUES (
-    'admin@apexcollege.edu',
+    'admin@optout.edu',
     '$2a$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewdBPj/RK.PvhN1e',
     'System',
     'Administrator',
@@ -32,7 +32,7 @@ VALUES (
 INSERT INTO user_roles (user_id, role_id)
 SELECT u.id, r.id
 FROM users u, roles r
-WHERE u.email = 'admin@apexcollege.edu'
+WHERE u.email = 'admin@optout.edu'
   AND r.name = 'ADMIN';
 
 -- Record this in the audit log

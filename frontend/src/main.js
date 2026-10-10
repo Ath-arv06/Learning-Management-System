@@ -3,7 +3,7 @@ import { api } from './api.js';
 
 // Application State
 const state = {
-  theme: localStorage.getItem('apex_theme') || 'dark',
+  theme: localStorage.getItem('optout_theme') || 'dark',
   currentRole: 'STUDENT', // 'STUDENT' | 'INSTRUCTOR' | 'ADMIN'
   activeTab: 'dashboard',
   searchQuery: '',
@@ -121,7 +121,7 @@ function render() {
             </svg>
           </div>
           <div>
-            <div class="brand-title">APEX COLLEGE LMS</div>
+            <div class="brand-title">OPTOUT LMS</div>
             <div class="brand-subtitle">Academic Enterprise OS</div>
           </div>
         </div>
@@ -952,7 +952,7 @@ function attachEventListeners() {
   if (themeToggle) {
     themeToggle.addEventListener('click', () => {
       state.theme = state.theme === 'dark' ? 'light' : 'dark';
-      localStorage.setItem('apex_theme', state.theme);
+      localStorage.setItem('optout_theme', state.theme);
       render();
     });
   }
@@ -1054,7 +1054,7 @@ function attachViewSpecificListeners() {
           </p>
           <div class="form-group">
             <label class="form-label">Submission Notes / Git Repository URL</label>
-            <input type="text" class="form-input" id="sub-git-url" placeholder="https://github.com/apex-student/resilient-gateway" />
+            <input type="text" class="form-input" id="sub-git-url" placeholder="https://github.com/optout-student/resilient-gateway" />
           </div>
           <div class="form-group">
             <label class="form-label">Attached Report / Artifacts</label>

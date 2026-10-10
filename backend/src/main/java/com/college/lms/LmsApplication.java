@@ -7,7 +7,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
- * Entry point for the Apex College Learning Management System.
+ * Entry point for the OptOut Learning Management System.
  *
  * <p>The application is structured as a modular monolith with the following top-level modules:
  * <ul>

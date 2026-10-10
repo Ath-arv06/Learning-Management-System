@@ -1,5 +1,5 @@
 -- ============================================================
--- Apex College LMS — Database Setup Script
+-- OptOut LMS — Database Setup Script
 -- Run this ONCE in MySQL Workbench or MySQL CLI as a user with
 -- CREATE DATABASE and GRANT privileges (typically root).
 --

@@ -1,6 +1,6 @@
 -- ============================================================
 -- V1__init_schema.sql
--- Initial schema for Apex College LMS
+-- Initial schema for OptOut LMS
 -- All timestamps stored in UTC.
 -- Foreign keys enforced at database level.
 -- ============================================================

@@ -3,7 +3,7 @@
 export const initialData = {
   currentUser: {
     id: "usr-01",
-    email: "student@apexcollege.edu",
+    email: "student@optout.edu",
     name: "Aiden Vance",
     role: "STUDENT",
     avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=256",
@@ -17,7 +17,7 @@ export const initialData = {
   availableUsers: [
     {
       id: "usr-01",
-      email: "student@apexcollege.edu",
+      email: "student@optout.edu",
       name: "Aiden Vance",
       role: "STUDENT",
       avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=256",
@@ -27,7 +27,7 @@ export const initialData = {
     },
     {
       id: "usr-02",
-      email: "prof.elena@apexcollege.edu",
+      email: "prof.elena@optout.edu",
       name: "Dr. Elena Rostova",
       role: "INSTRUCTOR",
       avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=256",
@@ -37,7 +37,7 @@ export const initialData = {
     },
     {
       id: "usr-03",
-      email: "admin@apexcollege.edu",
+      email: "admin@optout.edu",
       name: "System Administrator",
       role: "ADMIN",
       avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=256",
@@ -276,9 +276,9 @@ export const initialData = {
   ],
 
   auditEvents: [
-    { id: "aud-01", actor: "admin@apexcollege.edu", action: "SYSTEM_DIAGNOSTICS_RUN", resource: "SPRING_BOOT_ACTUATOR", ip: "127.0.0.1", time: "Just now", status: "SUCCESS" },
-    { id: "aud-02", actor: "prof.elena@apexcollege.edu", action: "COURSE_MODULE_PUBLISHED", resource: "CS-482 / Mod 2", ip: "192.168.1.45", time: "12 mins ago", status: "SUCCESS" },
-    { id: "aud-03", actor: "student@apexcollege.edu", action: "ASSIGNMENT_SUBMISSION", resource: "AI-501 / Asg 2", ip: "10.0.0.82", time: "2 hours ago", status: "SUCCESS" },
+    { id: "aud-01", actor: "admin@optout.edu", action: "SYSTEM_DIAGNOSTICS_RUN", resource: "SPRING_BOOT_ACTUATOR", ip: "127.0.0.1", time: "Just now", status: "SUCCESS" },
+    { id: "aud-02", actor: "prof.elena@optout.edu", action: "COURSE_MODULE_PUBLISHED", resource: "CS-482 / Mod 2", ip: "192.168.1.45", time: "12 mins ago", status: "SUCCESS" },
+    { id: "aud-03", actor: "student@optout.edu", action: "ASSIGNMENT_SUBMISSION", resource: "AI-501 / Asg 2", ip: "10.0.0.82", time: "2 hours ago", status: "SUCCESS" },
     { id: "aud-04", actor: "system", action: "FLYWAY_SCHEMA_VERIFIED", resource: "lms_db", ip: "localhost", time: "3 hours ago", status: "SUCCESS" },
     { id: "aud-05", actor: "security_monitor", action: "RATE_LIMIT_CHECK", resource: "LOGIN_ENDPOINT", ip: "203.0.113.19", time: "5 hours ago", status: "NEUTRALIZED" }
   ]
