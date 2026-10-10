@@ -1,0 +1,60 @@
+# ============================================================
+# Apex College LMS — .gitignore
+# ============================================================
+
+# ── Secrets and environment ───────────────────────────────────
+.env
+*.env.local
+*.env.production
+*.env.development
+secrets/
+*.key
+*.pem
+*.p12
+
+# ── Uploaded files (stored outside repo) ─────────────────────
+backend/uploads/
+
+# ── Java build artifacts ──────────────────────────────────────
+target/
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+.mvn/wrapper/maven-wrapper.jar
+
+# ── IntelliJ IDEA ─────────────────────────────────────────────
+.idea/
+*.iml
+*.ipr
+*.iws
+out/
+
+# ── VS Code ───────────────────────────────────────────────────
+.vscode/
+*.code-workspace
+
+# ── Node.js ───────────────────────────────────────────────────
+node_modules/
+frontend/dist/
+frontend/.vite/
+
+# ── OS files ──────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ── Logs ──────────────────────────────────────────────────────
+logs/
+*.log
+*.log.*
+
+# ── Test reports ──────────────────────────────────────────────
+surefire-reports/
+failsafe-reports/
+coverage/
+
+# ── Production credentials (if ever generated locally) ────────
+google-services.json
+firebase-adminsdk*.json

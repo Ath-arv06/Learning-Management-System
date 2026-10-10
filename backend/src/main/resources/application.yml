@@ -1,0 +1,195 @@
+# ============================================================
+# Apex College LMS — Application Configuration
+# ============================================================
+# Environment-specific values (passwords, keys, secrets) must
+# NEVER be hardcoded here. Use environment variables or an
+# external secrets manager. See .env.example for required vars.
+# ============================================================
+
+spring:
+  application:
+    name: apex-college-lms
+
+  # ── Database ──────────────────────────────────────────────
+  datasource:
+    url: ${DB_URL:jdbc:mysql://localhost:3306/lms_db?serverTimezone=UTC&useSSL=false&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=false}
+    username: ${DB_USERNAME:lms_user}
+    password: ${DB_PASSWORD:changeme}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      pool-name: LmsHikariPool
+      maximum-pool-size: 10
+      minimum-idle: 2
+      idle-timeout: 30000
+      connection-timeout: 20000
+      max-lifetime: 1800000
+
+  # ── JPA / Hibernate ───────────────────────────────────────
+  jpa:
+    hibernate:
+      ddl-auto: validate          # Flyway owns schema; Hibernate only validates
+    show-sql: false               # Enable in dev profile only
+    open-in-view: false           # Prevents lazy-loading anti-patterns in controllers
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        format_sql: true
+        jdbc:
+          time_zone: UTC
+
+  # ── Flyway ────────────────────────────────────────────────
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: false
+    validate-on-migrate: true
+
+  # ── Session ───────────────────────────────────────────────
+  session:
+    # Spring Session uses the JdbcHttpSessionConfiguration implicitly here.
+    # For Phase 3 we use the default in-memory store; we switch to JDBC-backed
+    # sessions in Phase 4 so sessions survive restart and can be enumerated
+    # for revocation. Change store-type to jdbc then.
+    store-type: none              # changed to 'jdbc' in Phase 4
+    timeout: 30m                  # idle timeout — absolute controlled by code
+
+  # ── Mail ──────────────────────────────────────────────────
+  mail:
+    host: ${MAIL_HOST:localhost}
+    port: ${MAIL_PORT:25}
+    username: ${MAIL_USERNAME:}
+    password: ${MAIL_PASSWORD:}
+    properties:
+      mail:
+        smtp:
+          auth: ${MAIL_SMTP_AUTH:false}
+          starttls:
+            enable: ${MAIL_SMTP_STARTTLS:false}
+
+  # ── OAuth2 (Google) ───────────────────────────────────────
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${GOOGLE_CLIENT_ID:PLACEHOLDER_SET_IN_ENV}
+            client-secret: ${GOOGLE_CLIENT_SECRET:PLACEHOLDER_SET_IN_ENV}
+            scope:
+              - openid
+              - email
+              - profile
+            redirect-uri: "{baseUrl}/api/v1/auth/oauth2/callback/google"
+        provider:
+          google:
+            authorization-uri: https://accounts.google.com/o/oauth2/auth
+            token-uri: https://oauth2.googleapis.com/token
+            user-info-uri: https://www.googleapis.com/oauth2/v3/userinfo
+            jwk-set-uri: https://www.googleapis.com/oauth2/v3/certs
+            user-name-attribute: sub
+
+  # ── Thymeleaf (email templates) ───────────────────────────
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: HTML
+    cache: true
+
+  # ── Async task executor ───────────────────────────────────
+  task:
+    execution:
+      pool:
+        core-size: 4
+        max-size: 16
+        queue-capacity: 100
+      thread-name-prefix: lms-async-
+    scheduling:
+      pool:
+        size: 2
+
+# ── Spring Boot Actuator ──────────────────────────────────────
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+      base-path: /actuator
+  endpoint:
+    health:
+      show-details: when-authorized
+  info:
+    env:
+      enabled: true
+
+info:
+  app:
+    name: Apex College LMS
+    version: 1.0.0-SNAPSHOT
+
+# ── Server ───────────────────────────────────────────────────
+server:
+  port: 8080
+  servlet:
+    context-path: /
+    session:
+      cookie:
+        name: LMS_SESSION
+        http-only: true
+        secure: false          # set to true in production (HTTPS only)
+        same-site: strict
+        max-age: 28800         # 8-hour absolute maximum (30-min idle enforced in code)
+  error:
+    include-message: never    # Never expose internal error messages in production
+    include-stacktrace: never
+    include-exception: false
+
+# ── Application-specific properties ──────────────────────────
+app:
+  institution:
+    name: "Apex College"
+    website: "https://www.apexcollege.edu"
+    support-email: "support@apexcollege.edu"
+
+  auth:
+    password-reset-token-expiry-hours: 1
+    email-verification-token-expiry-hours: 24
+    max-login-attempts-per-minute: 5
+    session-absolute-timeout-hours: 8
+
+  storage:
+    provider: local                       # 'local' or 's3'
+    local:
+      base-path: ${UPLOAD_BASE_PATH:./uploads}
+    s3:
+      bucket: ${S3_BUCKET:}
+      region: ${S3_REGION:}
+      access-key: ${S3_ACCESS_KEY:}
+      secret-key: ${S3_SECRET_KEY:}
+      endpoint: ${S3_ENDPOINT:}           # for MinIO / Cloudflare R2
+    max-file-size-bytes: 104857600        # 100 MB
+
+  email:
+    enabled: ${EMAIL_ENABLED:false}       # false = log-to-console mode
+    from-address: ${EMAIL_FROM:noreply@apexcollege.edu}
+    from-name: "Apex College LMS"
+
+  ai:
+    enabled: ${AI_ENABLED:false}
+    provider: ${AI_PROVIDER:openai}       # 'openai' | 'gemini'
+    openai:
+      api-key: ${OPENAI_API_KEY:}
+      model: ${OPENAI_MODEL:gpt-4o}
+    gemini:
+      api-key: ${GEMINI_API_KEY:}
+      model: ${GEMINI_MODEL:gemini-1.5-pro}
+    rate-limit:
+      requests-per-minute-per-user: 10
+      daily-token-budget-per-user: 50000
+
+  live-class:
+    provider: ${LIVE_CLASS_PROVIDER:none}  # 'none' | 'zoom' | 'google-meet'
+    zoom:
+      api-key: ${ZOOM_API_KEY:}
+      api-secret: ${ZOOM_API_SECRET:}
+
+  cors:
+    allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:5173}

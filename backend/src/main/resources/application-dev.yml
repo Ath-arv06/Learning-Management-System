@@ -1,0 +1,38 @@
+# ============================================================
+# Dev profile — overrides only what differs in development
+# Activated with: --spring.profiles.active=dev
+# ============================================================
+
+spring:
+  jpa:
+    show-sql: true           # log SQL queries in dev console
+    properties:
+      hibernate:
+        format_sql: true
+
+  devtools:
+    restart:
+      enabled: true
+    livereload:
+      enabled: true
+
+server:
+  servlet:
+    session:
+      cookie:
+        secure: false        # HTTP is fine locally
+
+logging:
+  level:
+    com.college.lms: DEBUG
+    org.springframework.security: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.orm.jdbc.bind: TRACE
+
+app:
+  email:
+    enabled: false           # emails printed to console log in dev
+
+  storage:
+    local:
+      base-path: ./uploads   # relative to where the JAR is run
