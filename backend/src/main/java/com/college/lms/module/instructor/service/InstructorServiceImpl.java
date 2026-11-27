@@ -47,7 +47,7 @@ public class InstructorServiceImpl implements InstructorService {
     }
 
     @Override
-    @Transactional(readOnly = true)
+    @Transactional
     public InstructorDashboardResponse getInstructorDashboard(UserPrincipal principal) {
         Long userId = principal.getId();
         User user = userRepository.findById(userId)

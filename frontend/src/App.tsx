@@ -22,6 +22,12 @@ import { StudentAiTutorPage } from './features/ai/pages/StudentAiTutorPage';
 import { FacultyAiQuestionGeneratorPage } from './features/ai/pages/FacultyAiQuestionGeneratorPage';
 import { DiscussionsPage } from './features/communication/pages/DiscussionsPage';
 import { CertificateViewerPage } from './features/certificate/pages/CertificateViewerPage';
+import { StudentAssignmentsPage } from './features/student/pages/StudentAssignmentsPage';
+import { StudentSchedulePage } from './features/student/pages/StudentSchedulePage';
+import { StudentGradesPage } from './features/student/pages/StudentGradesPage';
+import { InstructorSubmissionsPage } from './features/instructor/pages/InstructorSubmissionsPage';
+import { InstructorCurriculumPage } from './features/instructor/pages/InstructorCurriculumPage';
+import { AdminGovernancePage } from './features/admin/pages/AdminGovernancePage';
 import {
   GraduationCap,
   BookOpen,
@@ -267,9 +273,9 @@ export const App: React.FC = () => {
             <Route path="courses" element={<StudentCoursesPage />} />
             <Route path="courses/:courseId" element={<CourseClassroomPage />} />
             <Route path="quizzes/:quizId" element={<QuizRunnerPage />} />
-            <Route path="assignments" element={<StudentDashboardPage />} />
-            <Route path="schedule" element={<StudentDashboardPage />} />
-            <Route path="grades" element={<StudentDashboardPage />} />
+            <Route path="assignments" element={<StudentAssignmentsPage />} />
+            <Route path="schedule" element={<StudentSchedulePage />} />
+            <Route path="grades" element={<StudentGradesPage />} />
             <Route path="certificates" element={<CertificateViewerPage />} />
             <Route path="discussions" element={<DiscussionsPage />} />
             <Route path="ai-assistant" element={<StudentAiTutorPage />} />
@@ -284,8 +290,8 @@ export const App: React.FC = () => {
           >
             <Route index element={<InstructorDashboardPage />} />
             <Route path="courses" element={<InstructorCoursesPage />} />
-            <Route path="submissions" element={<InstructorDashboardPage />} />
-            <Route path="curriculum" element={<InstructorDashboardPage />} />
+            <Route path="submissions" element={<InstructorSubmissionsPage />} />
+            <Route path="curriculum" element={<InstructorCurriculumPage />} />
             <Route path="students" element={<FacultyAttendancePage />} />
             <Route path="analytics" element={<FacultyAnalyticsPage />} />
             <Route path="ai-tools" element={<FacultyAiQuestionGeneratorPage />} />
@@ -300,11 +306,11 @@ export const App: React.FC = () => {
           >
             <Route index element={<AdminDashboardPage />} />
             <Route path="users" element={<AdminUsersPage />} />
-            <Route path="departments" element={<AdminDashboardPage />} />
-            <Route path="courses" element={<AdminDashboardPage />} />
-            <Route path="security" element={<AdminDashboardPage />} />
-            <Route path="telemetry" element={<AdminDashboardPage />} />
-            <Route path="settings" element={<AdminDashboardPage />} />
+            <Route path="departments" element={<AdminGovernancePage initialTab="departments" />} />
+            <Route path="courses" element={<AdminGovernancePage initialTab="courses" />} />
+            <Route path="security" element={<AdminGovernancePage initialTab="audit" />} />
+            <Route path="telemetry" element={<AdminGovernancePage initialTab="audit" />} />
+            <Route path="settings" element={<AdminGovernancePage initialTab="terms" />} />
           </Route>
         </Routes>
       </BrowserRouter>

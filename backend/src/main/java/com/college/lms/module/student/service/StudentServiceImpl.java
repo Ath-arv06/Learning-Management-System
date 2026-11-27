@@ -49,7 +49,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    @Transactional(readOnly = true)
+    @Transactional
     public StudentDashboardResponse getStudentDashboard(UserPrincipal principal) {
         Long userId = principal.getId();
         User user = userRepository.findById(userId)
@@ -77,10 +77,10 @@ public class StudentServiceImpl implements StudentService {
 
         List<CourseEnrollment> enrollments = enrollmentRepository.findByStudentIdWithCourse(userId);
         
-        // If a newly registered student has no enrollments yet, auto-enroll them in the first 2 seed courses
+        // If a newly registered student has no enrollments yet, auto-enroll them in the first 4 seed courses
         if (enrollments.isEmpty()) {
             List<Course> seedCourses = courseRepository.findByStatusAndIsDeletedFalse(CourseStatus.PUBLISHED);
-            for (Course c : seedCourses.stream().limit(2).collect(Collectors.toList())) {
+            for (Course c : seedCourses.stream().limit(4).collect(Collectors.toList())) {
                 CourseEnrollment autoEnroll = new CourseEnrollment(c, user);
                 autoEnroll.setProgressPercentage(new BigDecimal("45.00"));
                 enrollmentRepository.save(autoEnroll);
