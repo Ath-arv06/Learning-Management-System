@@ -204,10 +204,13 @@ public class AuthServiceImpl implements AuthService {
         return new AuthResponse("Token refreshed successfully", userDto);
     }
 
+    @org.springframework.beans.factory.annotation.Value("${app.cookie.secure:false}")
+    private boolean cookieSecure;
+
     @Override
     public void logout(HttpServletResponse response) {
-        ResponseCookie cleanAccess = CookieUtils.createCleanCookie(CookieUtils.ACCESS_TOKEN_COOKIE_NAME, false);
-        ResponseCookie cleanRefresh = CookieUtils.createCleanCookie(CookieUtils.REFRESH_TOKEN_COOKIE_NAME, false);
+        ResponseCookie cleanAccess = CookieUtils.createCleanCookie(CookieUtils.ACCESS_TOKEN_COOKIE_NAME, cookieSecure);
+        ResponseCookie cleanRefresh = CookieUtils.createCleanCookie(CookieUtils.REFRESH_TOKEN_COOKIE_NAME, cookieSecure);
 
         response.addHeader("Set-Cookie", cleanAccess.toString());
         response.addHeader("Set-Cookie", cleanRefresh.toString());
@@ -228,10 +231,10 @@ public class AuthServiceImpl implements AuthService {
         String refreshToken = tokenProvider.generateRefreshToken(principal);
 
         ResponseCookie accessCookie = CookieUtils.createAccessTokenCookie(
-                accessToken, tokenProvider.getAccessTokenExpirationMs(), false
+                accessToken, tokenProvider.getAccessTokenExpirationMs(), cookieSecure
         );
         ResponseCookie refreshCookie = CookieUtils.createRefreshTokenCookie(
-                refreshToken, tokenProvider.getRefreshTokenExpirationMs(), false
+                refreshToken, tokenProvider.getRefreshTokenExpirationMs(), cookieSecure
         );
 
         response.addHeader("Set-Cookie", accessCookie.toString());
