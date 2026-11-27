@@ -30,22 +30,28 @@ CREATE TABLE IF NOT EXISTS attendance_records (
     CONSTRAINT fk_ar_student FOREIGN KEY (student_id) REFERENCES users(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- 3. Seed Initial Attendance Sessions for Course 1 (CS101)
-INSERT INTO attendance_sessions (id, course_id, instructor_id, session_date, start_time, end_time, topic) VALUES
-(1, 1, 1, '2026-03-01', '09:00:00', '10:30:00', 'Lecture 1: Course Overview and Asymptotic Notations'),
-(2, 1, 1, '2026-03-03', '09:00:00', '10:30:00', 'Lecture 2: Dynamic Arrays & Amortized Complexity'),
-(3, 1, 1, '2026-03-08', '09:00:00', '10:30:00', 'Lecture 3: Graph Representations and BFS Traversals')
-ON DUPLICATE KEY UPDATE topic=VALUES(topic);
+-- 3. Seed Initial Attendance Sessions safely if courses & users exist
+INSERT IGNORE INTO attendance_sessions (id, course_id, instructor_id, session_date, start_time, end_time, topic)
+SELECT 1, c.id, u.id, '2026-03-01', '09:00:00', '10:30:00', 'Lecture 1: Course Overview and Asymptotic Notations'
+FROM (SELECT MIN(id) AS id FROM courses) c
+JOIN (SELECT MIN(id) AS id FROM users) u
+WHERE c.id IS NOT NULL AND u.id IS NOT NULL;
 
--- 4. Seed Attendance Records for students enrolled in Course 1
-INSERT INTO attendance_records (session_id, student_id, status)
-SELECT 1, u.id, 'PRESENT' FROM users u WHERE u.id IN (1, 2)
-ON DUPLICATE KEY UPDATE status=VALUES(status);
+INSERT IGNORE INTO attendance_sessions (id, course_id, instructor_id, session_date, start_time, end_time, topic)
+SELECT 2, c.id, u.id, '2026-03-03', '09:00:00', '10:30:00', 'Lecture 2: Dynamic Arrays & Amortized Complexity'
+FROM (SELECT MIN(id) AS id FROM courses) c
+JOIN (SELECT MIN(id) AS id FROM users) u
+WHERE c.id IS NOT NULL AND u.id IS NOT NULL;
 
-INSERT INTO attendance_records (session_id, student_id, status)
-SELECT 2, u.id, 'PRESENT' FROM users u WHERE u.id IN (1, 2)
-ON DUPLICATE KEY UPDATE status=VALUES(status);
+INSERT IGNORE INTO attendance_sessions (id, course_id, instructor_id, session_date, start_time, end_time, topic)
+SELECT 3, c.id, u.id, '2026-03-08', '09:00:00', '10:30:00', 'Lecture 3: Graph Representations and BFS Traversals'
+FROM (SELECT MIN(id) AS id FROM courses) c
+JOIN (SELECT MIN(id) AS id FROM users) u
+WHERE c.id IS NOT NULL AND u.id IS NOT NULL;
 
-INSERT INTO attendance_records (session_id, student_id, status)
-SELECT 3, u.id, 'PRESENT' FROM users u WHERE u.id IN (1, 2)
-ON DUPLICATE KEY UPDATE status=VALUES(status);
+-- 4. Seed Attendance Records safely
+INSERT IGNORE INTO attendance_records (session_id, student_id, status)
+SELECT s.id, u.id, 'PRESENT'
+FROM attendance_sessions s
+JOIN users u ON u.id IN (1, 2)
+WHERE s.id IN (1, 2, 3);
