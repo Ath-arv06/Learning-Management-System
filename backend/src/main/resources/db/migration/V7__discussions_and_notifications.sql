@@ -58,21 +58,37 @@ CREATE TABLE IF NOT EXISTS live_class_sessions (
     CONSTRAINT fk_lcs_host FOREIGN KEY (host_id) REFERENCES users(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- 5. Seed Threads and Notifications
-INSERT INTO discussion_threads (id, course_id, author_id, title, content, is_pinned) VALUES
-(1, 1, 1, 'Welcome to CS101 — Course Questions & Office Hours Thread', 'Please post any questions regarding lecture materials, algorithms, or lab problem sets here.', TRUE),
-(2, 1, 1, 'Study Group Formations for Midterm Examination', 'Connect with peers to schedule virtual revision sessions for dynamic arrays and graph traversals.', FALSE)
-ON DUPLICATE KEY UPDATE title=VALUES(title);
+-- 5. Seed Threads, Posts, Notifications & Live Class safely if courses & users exist
+INSERT IGNORE INTO discussion_threads (id, course_id, author_id, title, content, is_pinned)
+SELECT 1, c.id, u.id, 'Welcome to CS101 — Course Questions & Office Hours Thread', 'Please post any questions regarding lecture materials, algorithms, or lab problem sets here.', TRUE
+FROM (SELECT MIN(id) AS id FROM courses) c
+JOIN (SELECT MIN(id) AS id FROM users) u
+WHERE c.id IS NOT NULL AND u.id IS NOT NULL;
 
-INSERT INTO discussion_posts (id, thread_id, author_id, content) VALUES
-(1, 1, 1, 'Reminder: Weekly professor office hours are held Tuesdays from 2:00 PM - 4:00 PM via the Live Classroom launcher.')
-ON DUPLICATE KEY UPDATE content=VALUES(content);
+INSERT IGNORE INTO discussion_threads (id, course_id, author_id, title, content, is_pinned)
+SELECT 2, c.id, u.id, 'Study Group Formations for Midterm Examination', 'Connect with peers to schedule virtual revision sessions for dynamic arrays and graph traversals.', FALSE
+FROM (SELECT MIN(id) AS id FROM courses) c
+JOIN (SELECT MIN(id) AS id FROM users) u
+WHERE c.id IS NOT NULL AND u.id IS NOT NULL;
 
-INSERT INTO notifications (id, user_id, title, message, notification_type, is_read) VALUES
-(1, 1, 'New Course Resource Published', 'Lecture 01 Slides and Asymptotic proofs have been uploaded to CS101.', 'SYSTEM', FALSE),
-(2, 1, 'Upcoming Examination Alert', 'Quiz 1: Asymptotic Complexity is open for submission.', 'ASSIGNMENT', FALSE)
-ON DUPLICATE KEY UPDATE title=VALUES(title);
+INSERT IGNORE INTO discussion_posts (id, thread_id, author_id, content)
+SELECT 1, t.id, u.id, 'Reminder: Weekly professor office hours are held Tuesdays from 2:00 PM - 4:00 PM via the Live Classroom launcher.'
+FROM (SELECT MIN(id) AS id FROM discussion_threads) t
+JOIN (SELECT MIN(id) AS id FROM users) u
+WHERE t.id IS NOT NULL AND u.id IS NOT NULL;
 
-INSERT INTO live_class_sessions (id, course_id, host_id, title, meeting_url, scheduled_start, duration_minutes, is_active) VALUES
-(1, 1, 1, 'CS101: Live Algorithmic Problem Solving Workshop', 'https://meet.google.com/opt-out-lms', CURRENT_TIMESTAMP, 90, TRUE)
-ON DUPLICATE KEY UPDATE title=VALUES(title);
+INSERT IGNORE INTO notifications (id, user_id, title, message, notification_type, is_read)
+SELECT 1, u.id, 'New Course Resource Published', 'Lecture 01 Slides and Asymptotic proofs have been uploaded to CS101.', 'SYSTEM', FALSE
+FROM (SELECT MIN(id) AS id FROM users) u
+WHERE u.id IS NOT NULL;
+
+INSERT IGNORE INTO notifications (id, user_id, title, message, notification_type, is_read)
+SELECT 2, u.id, 'Upcoming Examination Alert', 'Quiz 1: Asymptotic Complexity is open for submission.', 'ASSIGNMENT', FALSE
+FROM (SELECT MIN(id) AS id FROM users) u
+WHERE u.id IS NOT NULL;
+
+INSERT IGNORE INTO live_class_sessions (id, course_id, host_id, title, meeting_url, scheduled_start, duration_minutes, is_active)
+SELECT 1, c.id, u.id, 'CS101: Live Algorithmic Problem Solving Workshop', 'https://meet.google.com/opt-out-lms', CURRENT_TIMESTAMP, 90, TRUE
+FROM (SELECT MIN(id) AS id FROM courses) c
+JOIN (SELECT MIN(id) AS id FROM users) u
+WHERE c.id IS NOT NULL AND u.id IS NOT NULL;
