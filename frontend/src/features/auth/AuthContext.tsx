@@ -19,7 +19,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   useEffect(() => {
     apiClient
       .get<User>('/auth/me')
-      .then((res) => setUser(res.data))
+      .then((res) => {
+        if (res.data && typeof res.data === 'object' && Array.isArray(res.data.roles)) {
+          setUser(res.data);
+        } else {
+          setUser(null);
+        }
+      })
       .catch(() => setUser(null))
       .finally(() => setLoading(false));
   }, []);
