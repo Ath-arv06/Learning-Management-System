@@ -1,60 +1,74 @@
-# ============================================================
-# Apex College LMS — .gitignore
-# ============================================================
-
-# ── Secrets and environment ───────────────────────────────────
-.env
-*.env.local
-*.env.production
-*.env.development
-secrets/
-*.key
-*.pem
-*.p12
-
-# ── Uploaded files (stored outside repo) ─────────────────────
-backend/uploads/
-
-# ── Java build artifacts ──────────────────────────────────────
-target/
+# Compiled class file
 *.class
+
+# Log file
+*.log
+
+# BlueJ files
+*.ctxt
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files #
 *.jar
 *.war
-*.ear
 *.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# Virtual machine crash logs
+hs_err_pid*
+replay_pid*
+
+# Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
 .mvn/wrapper/maven-wrapper.jar
 
-# ── IntelliJ IDEA ─────────────────────────────────────────────
-.idea/
-*.iml
-*.ipr
-*.iws
-out/
+# Gradle
+.gradle
+/build/
 
-# ── VS Code ───────────────────────────────────────────────────
-.vscode/
-*.code-workspace
-
-# ── Node.js ───────────────────────────────────────────────────
+# Node & npm
 node_modules/
-frontend/dist/
-frontend/.vite/
+dist/
+dist-ssr/
+*.local
 
-# ── OS files ──────────────────────────────────────────────────
+# Editor directories and files
+.idea
+*.iml
+.classpath
+.project
+.settings
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.sublime-workspace
+*.sublime-project
+
+# Environment files
+.env
+.env.production
+.env.local
+*.env
+
+# Operating System Files
 .DS_Store
 Thumbs.db
-desktop.ini
 
-# ── Logs ──────────────────────────────────────────────────────
-logs/
-*.log
-*.log.*
-
-# ── Test reports ──────────────────────────────────────────────
-surefire-reports/
-failsafe-reports/
-coverage/
-
-# ── Production credentials (if ever generated locally) ────────
-google-services.json
-firebase-adminsdk*.json
+# LMS Storage & Uploads
+uploads/
+/var/lms/uploads/

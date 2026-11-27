@@ -1,102 +1,103 @@
-# 🎓 OptOut — Learning Management System (LMS)
+# 🎓 Opt-Out — University Learning Management System (LMS)
 
-A complete, modern full-stack **Learning Management System (LMS)** designed for universities and colleges. Built with a robust **Java Spring Boot** backend and a fast, responsive **Vite** live frontend with dark-mode aesthetics.
+A professional, secure, scalable, and modular **University Learning Management System** built for modern colleges and higher education institutions.
+
+Designed with clean architecture, strict role separation, enterprise-grade security, and server-orchestrated **Google Gemini AI** learning assistance.
 
 ---
 
-## 🌟 What This Project Does
+## 🌟 Portals & Capabilities
 
-This LMS provides three dedicated portals tailored to each university role:
+The system features three distinct, role-dedicated portals:
 
 ### 1. 👨‍🎓 Student Portal
-- **Dashboard**: Track enrolled courses, GPA (3.84), total credits, and upcoming deadlines.
-- **Learning Classroom**: Watch video lectures, read lesson notes, download slides, and track course completion progress.
-- **Assignments & Labs**: View pending deliverables and submit projects with git repository links and file attachments.
-- **Quizzes & Tests**: Take interactive timed quizzes with automatic instant scoring and answer explanations.
+- **Academic Dashboard**: Cumulative GPA, total credits earned, enrolled courses, and upcoming deadlines.
+- **Classroom Player**: Streaming video lectures, lecture notes, downloadable PDFs, and lesson completion tracking.
+- **Assessments**: Assignment submission (file upload + repository links) and timed quizzes with instant grading.
+- **AI Learning Assistant**: Context-aware questions answered strictly from enrolled course materials.
+- **Academic Records**: Transcript, course grade breakdown, attendance monitoring, and verified certificates.
 
 ### 2. 👩‍🏫 Instructor Portal
-- **Course Management**: Build courses, add syllabus modules, and view enrolled students.
-- **Grading Queue**: Review student lab submissions, set grades (0–100), and publish feedback.
-- **Virtual Lectures**: Schedule live classes and office hours.
+- **Curriculum Studio**: Modular course builder (Sections, Lessons, Videos, PDF slides).
+- **Evaluation Queue**: Split-screen grading view with rubric scoring and AI-drafted feedback suggestions.
+- **Examination Builder**: Timed quiz creator with multi-format question banks and AI question generator.
+- **Attendance & Analytics**: Session attendance recording, gradebook exports, and at-risk student alerts.
 
 ### 3. 🛡️ Administrator Portal
-- **University Governance**: Organize departments (CSE, AI, Cybersecurity, Business) and academic terms.
-- **Security Audit Trail**: View a live, immutable log of user logins, role updates, and system events.
-- **System Health**: Check backend REST endpoints and database status.
+- **Institutional Governance**: Department hierarchies, academic terms, and semester schedules.
+- **Identity & Access Management**: Bulk user import (CSV/Excel), role assignments, and account status controls.
+- **System Telemetry & Audit**: Real-time security audit trails, database migration monitoring, and health status.
 
 ---
 
 ## 🛠️ Technology Stack
 
-| Layer | Technologies |
-| :--- | :--- |
-| **Frontend** | HTML5, Vanilla JavaScript, CSS3 (Glassmorphism & Dark Mode), Vite Live Server |
-| **Backend** | Java 21, Spring Boot 3.4.0, Spring Security 6 (BCrypt & Sessions), Spring Data JPA |
-| **Database** | MySQL 8.0 with Flyway automated migrations |
-| **Security & Utilities** | Apache Tika (file validation), Bucket4j (rate limiting), SpringDoc OpenAPI (Swagger UI) |
+| Component | Technology | Description |
+| :--- | :--- | :--- |
+| **Backend** | Java 21 LTS, Spring Boot 3.4.x | Modular clean architecture, Spring Security 6, Spring Data JPA |
+| **Database** | MySQL 8.4 LTS | 3NF normalized schema, InnoDB, Flyway automated migrations |
+| **Frontend** | React 19, TypeScript, Vite | Tailwind CSS, shadcn/ui, TanStack Query, React Hook Form, Zod |
+| **AI Gateway** | Google Gemini API | Server-brokered Q&A, AI grading assistance, question generation |
+| **Security** | JWT in HttpOnly Cookies | SameSite=Strict, BCrypt, Apache Tika MIME validation, Bucket4j |
+| **Testing** | JUnit 5, Mockito, Playwright | Unit, integration, security boundary, and E2E test suites |
+| **DevOps** | Docker & Docker Compose | Multi-container orchestration (DB, Backend, Frontend) |
 
 ---
 
-## 🚀 How to Run the Project
+## 📚 Project Documentation
+
+Detailed architecture specifications are available in the [`docs/`](file:///c:/Users/sriva/OneDrive/Desktop/Learning%20Management%20System/docs) directory:
+
+- 📄 [Software Requirements Specification (SRS)](file:///c:/Users/sriva/OneDrive/Desktop/Learning%20Management%20System/docs/SRS.md)
+- 🏗️ [System Architecture](file:///c:/Users/sriva/OneDrive/Desktop/Learning%20Management%20System/docs/ARCHITECTURE.md)
+- 🗄️ [Database Design Specification](file:///c:/Users/sriva/OneDrive/Desktop/Learning%20Management%20System/docs/DATABASE_DESIGN.md)
+- 📊 [Entity-Relationship Diagram (ERD)](file:///c:/Users/sriva/OneDrive/Desktop/Learning%20Management%20System/docs/ER_DIAGRAM.md)
+- 🔌 [REST API Documentation](file:///c:/Users/sriva/OneDrive/Desktop/Learning%20Management%20System/docs/API_DOCUMENTATION.md)
+- 🎨 [UI/UX Design System](file:///c:/Users/sriva/OneDrive/Desktop/Learning%20Management%20System/docs/UI_UX_DESIGN.md)
+- 🔒 [Security Architecture & Policies](file:///c:/Users/sriva/OneDrive/Desktop/Learning%20Management%20System/docs/SECURITY.md)
+- 🗺️ [Development Roadmap (12 Phases)](file:///c:/Users/sriva/OneDrive/Desktop/Learning%20Management%20System/docs/DEVELOPMENT_ROADMAP.md)
+- 🧪 [Testing Strategy](file:///c:/Users/sriva/OneDrive/Desktop/Learning%20Management%20System/docs/TESTING_STRATEGY.md)
+- 🚀 [Deployment & Operations Guide](file:///c:/Users/sriva/OneDrive/Desktop/Learning%20Management%20System/docs/DEPLOYMENT.md)
+- 📋 [Current Development Status](file:///c:/Users/sriva/OneDrive/Desktop/Learning%20Management%20System/DEVELOPMENT_STATUS.md)
+
+---
+
+## 🚀 Quick Start (Local Development)
 
 ### 1. Database Setup
-Make sure MySQL is running on your computer, then run this in MySQL Workbench or terminal:
+Ensure MySQL 8.4 is running locally, then execute:
 ```sql
-CREATE DATABASE IF NOT EXISTS lms_db;
-CREATE USER IF NOT EXISTS 'lms_user'@'localhost' IDENTIFIED BY 'LmsDevPass2024!';
-GRANT ALL ON lms_db.* TO 'lms_user'@'localhost';
+CREATE DATABASE IF NOT EXISTS optout_lms_db CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
+CREATE USER IF NOT EXISTS 'lms_app'@'localhost' IDENTIFIED BY 'LmsSecretPass2026!';
+GRANT ALL PRIVILEGES ON optout_lms_db.* TO 'lms_app'@'localhost';
 FLUSH PRIVILEGES;
 ```
-*(Or execute the script in `scripts/setup_database.sql`)*
 
----
-
-### 2. Start the Backend Server
+### 2. Environment Configuration
+Copy `.env.example` to `.env`:
 ```bash
-cd backend
-.\mvnw.cmd spring-boot:run -Dspring-boot.run.arguments=--spring.profiles.active=dev
+cp .env.example .env
 ```
-- **Backend URL**: `http://localhost:8080`
-- **Swagger API Docs**: `http://localhost:8080/swagger-ui/index.html`
+Provide your `GEMINI_API_KEY` and update credentials as required.
 
----
-
-### 3. Start the Frontend Live Server
-Open a second terminal window:
+### 3. Docker Compose Deployment (Recommended)
+Run the full stack (MySQL 8.4, Spring Boot Backend, Nginx React Frontend):
 ```bash
-cd frontend
-npm install
-npm run dev
+docker compose up --build -d
 ```
-- **Live Application URL**: `http://localhost:5173/`
+- **Frontend**: `http://localhost:3000`
+- **Backend API & Swagger**: `http://localhost:8080/swagger-ui.html`
 
----
+### 4. Local Development (Without Docker)
+```bash
+# Backend
+cd backend && ./mvnw spring-boot:run
 
-## 🔑 Default Login Credentials
-
-| Role | Email | Password |
-| :--- | :--- | :--- |
-| **Admin** | `admin@optout.edu` | `Admin@123456` |
-| **Instructor** | `prof.elena@optout.edu` | *(Demo profile)* |
-| **Student** | `student@optout.edu` | *(Demo profile)* |
-
----
-
-## 📂 Project Structure
-
-```
-Learning Management System/
-├── backend/          # Spring Boot 3.4.0 Java application
-│   ├── src/          # Controllers, services, entities, migrations
-│   └── pom.xml       # Maven dependencies
-├── frontend/         # Interactive Vite web application
-│   ├── src/          # JavaScript logic, CSS styling, mock data
-│   └── index.html    # Web application entry point
-├── scripts/          # MySQL database setup script
-└── README.md         # Project documentation
+# Frontend
+cd frontend && npm install && npm run dev
 ```
 
 ---
 
-## 📄 License
-This project is open-source under the [MIT License](LICENSE).
+## ⚖️ License
+Proprietary academic software developed for institutional deployment.
